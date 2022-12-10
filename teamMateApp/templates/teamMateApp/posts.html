@@ -1,0 +1,39 @@
+{% load static %}
+
+
+    {% for team in teams %}
+    <div class="card-group col-sm-3">
+        <div class="card text-center border-dark m-3">
+            <a class="group_img"> 
+            <img class="card-img-top" src="{% static 'teamMateApp/img/'  %}{{team.image}}" alt="Card image cap">
+            </a>                    
+            <a class="main-avatar" href="#" >
+                <img alt="" width="50" height="50" src="{% static 'teamMateApp/img/'  %}{{team.createuser_image}}" class="avatar">
+            </a>
+            <div class="card-body">
+                <h5 class="card-title">{{team.title}}</h5>
+                <p class="card-text">{{team.content}}</p>
+                <p class="card-text"><small>Startdate : </small><small class="text-muted">{{team.startdate}}</small></p>
+                <p class="card-text"><small>Finishdate : </small><small class="text-muted">{{team.finishdate}}</small></p>
+
+            </div>
+            <div class="card-footer">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"> 
+                            {% for participant in team.participants %}
+                            <a href="">
+                                <img src="{% static 'teamMateApp/img/'  %}{{participant.user.image.url}}"
+                                alt="DP" class="rounded-circle img-fluid">
+                            </a>
+                            {% endfor %}
+
+                        </li>
+                        <li class="list-inline-item"> 
+                            <a href=""><img src="https://img.icons8.com/ios/50/000000/plus.png"
+                                width="30" height="30 " class="more"></a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
