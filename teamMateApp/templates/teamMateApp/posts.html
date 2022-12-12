@@ -1,13 +1,12 @@
 {% load static %}
 
-
     {% for team in teams %}
     <div class="card-group col-sm-3">
         <div class="card text-center border-dark m-3">
             <a class="group_img"> 
             <img class="card-img-top" src="{% static 'teamMateApp/img/'  %}{{team.image}}" alt="Card image cap">
             </a>                    
-            <a class="main-avatar" href="#" >
+            <a class="main-avatar" href="{% url 'profile' team.user_id %}" >
                 <img alt="" width="50" height="50" src="{% static 'teamMateApp/img/'  %}{{team.createuser_image}}" class="avatar">
             </a>
             <div class="card-body">
@@ -19,15 +18,25 @@
             </div>
             <div class="card-footer">
                     <ul class="list-inline">
+                        {% for participant in team.participants %}
                         <li class="list-inline-item"> 
-                            {% for participant in team.participants %}
-                            <a href="">
+                            <a href="{% url 'profile' participant.user.id %}">
                                 <img src="{% static 'teamMateApp/img/'  %}{{participant.user.image.url}}"
                                 alt="DP" class="rounded-circle img-fluid">
                             </a>
-                            {% endfor %}
-
                         </li>
+                        {% endfor %}
+
+                        {% if team.viewMore %}
+                        <li class="list-inline-item viewmore"> 
+                                <img src="{% static 'teamMateApp/icon/user.png' %}"
+                                    alt="DP" class="rounded-circle img-fluid">
+                                <div class="overly-item">
+                                    <a href="{% url 'participants' team.team_id %}" class="text-small">view more</a>
+                                </div>
+                        </li>
+                        {% endif %}
+
                         <li class="list-inline-item"> 
                             <a href=""><img src="https://img.icons8.com/ios/50/000000/plus.png"
                                 width="30" height="30 " class="more"></a>

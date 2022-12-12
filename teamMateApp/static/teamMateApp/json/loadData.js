@@ -22,8 +22,8 @@ function load() {
     const start = counter;
     const end = start + quantity - 1;
     counter = end;
-
-    fetch(`/posts?start=${start}&end=${end}`)
+    url = document.querySelector('#posts').dataset.url
+    fetch(`${url}?start=${start}&end=${end}`)
     .then(response => response.text())
     .then(data => {
         if(data){

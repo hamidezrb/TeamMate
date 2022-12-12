@@ -78,3 +78,57 @@ body{
   box-shadow: 0px 2px 12px -4px black;
 }
 
+.overly-item {
+  width: 40px;
+  height: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(34,34,34,.8);
+  border-radius: 100%;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+}
+.overly-item a {
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 auto;
+    display: table;
+}
+.overly-item  a:hover, a:focus {
+  color: #fff;
+  text-decoration: none;
+}
+.overly-item a:link { text-decoration: none; }
+
+.overly-item a:visited { text-decoration: none; }
+
+.overly-item a:hover { text-decoration: none; }
+
+.overly-item a:active { text-decoration: none; }
+
+.text-small {
+  letter-spacing: 1px;
+  line-height: 16px;
+}
+.viewmore{
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border: solid 1px #d8d8d8;
+    border-radius: 100%;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    cursor: pointer;
+}
+

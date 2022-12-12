@@ -9,5 +9,12 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
     path("dashboard", views.dashboard, name="dashboard"),
-    path("posts", views.posts, name="posts")
+    path("posts", views.posts, name="posts"),
+    path("participants/<int:team_id>", views.participants, name="participants"),
+    path("following", views.following, name="following"),
+    path("following_posts", views.following_posts, name="following_posts"),
+    path("profile/<int:user_id>", views.profile, name="profile"),
+    path("follow_user", views.follow_user, name="follow_user"),
+    path("profile_posts/<int:id>", views.profile_posts, name="profile_posts")
+    
 ]

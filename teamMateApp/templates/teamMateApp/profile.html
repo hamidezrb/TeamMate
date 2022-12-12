@@ -1,102 +1,70 @@
- <!DOCTYPE html>
- <html lang="en">
-    <header>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>TeamMate</title>
-        <link rel="stylesheet" href="/Style/Profile.css">
-        <link rel="stylesheet" href="/Style/Style.css">
-        <link href="/Style/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    </header>
-    <body>
+{% extends "teamMateApp/layout.html" %}
+{% load static %}
 
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'teamMateApp/style/profile.css' %}">
+{% endblock %}
 
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" wfd-invisible="true">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="Index.html">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="Login.html">LogIn</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="Dashboard.html">Dashboard</a>
-              </li>
-            </ul>
-            <form class="d-flex">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-light" type="submit">Search</button>
-            </form>
+{% block body %}
+
+<div class="breadcrumb-bg mb-3">
+  <div class="container">
+    <div class="row">
+      <div class="blog-author">
+        <div class="blog-author-image">
+          <div class="blog-author-image-card">
+          <img src="{% static 'teamMateApp/img/' %}{{user_info.image.url}}" alt="{{user_info.username}}">
           </div>
         </div>
-      </nav>
+        <div class="blog-author-content">
+          <h1> {{user_info.username}} </h1>
+          <h6>{{user_info.Info}}</h6>
+          {% if request.user.is_authenticated and request.user.id != user_info.id %}
+            {% if isfollowed %}
+              <button class="btn btn-primary" id="follow" data-follow = "0" data-userId="{{user_info.id}}">UnFollow</button>
+            {% else %}
+              <button class="btn btn-primary" id="follow" data-follow = "1" data-userId="{{user_info.id}}">Follow</button>
+            {% endif %}
+          {% endif %}
+        </div>
+        <!-- <div class="Follow_user">
+         
+        </div> -->
+        <div class="row text-center col-12">
+          <div class="col-4">
+              <h4 class="mb-1 line-height-5">{{teams_count}}</h4>
+              <small class="mb-0 font-weight-bold">teams</small>
+            </div>
+            <div class="col-4">
+                <h4 class="mb-1 line-height-5" id="followers">{{followers}}</h4>
+                <small class="mb-0 font-weight-bold">Followers</small>
+            </div>
+            <div class="col-4">
+                <h4 class="mb-1 line-height-5" id="followings">{{followings}}</h4>
+                <small class="mb-0 font-weight-bold">Followings</small>
+            </div>
+        </div>
 
-
-
-      <div class="container">
-                                <div class="row">
-                                  <div class="col-xs-12 col-sm-12">
-                                            <div class="home-content">
-                                                <div class="row flex-v-align">
-                                                  
-                                                    <div class="col-sm-12 col-md-5 col-lg-5">
-                                                        <div class="home-photo">
-                                                            <img alt="100*100" src="/Img/13.jpg" class="hp-inner transition rounded-circle">
-                                                        </div>
-                                                    </div>
-                                            
-                                                    <div class="col-sm-12 col-md-7 col-lg-7">
-                                                        
-                                                            <h1>Alex Smith</h1>
-                                                            <p>Fusce tempor magna mi, non egestas velit ultricies nec. Aenean convallis, risus non condimentum gravida, odio mauris ullamcorper felis, ut venenatis purus ex eu mi. Quisque imperdiet lacinia urna, a placerat sapien pretium eu.</p>
-                                                            <div class="row">
-                                                                      <div class="social-links">
-                                                                          <div class="col-xs-12 col-sm-3">
-                                                                              <a href=""><i class="fab fa-facebook-f"></i></a>
-                                                                          </div>
-                                                                          <div class="col-xs-12 col-sm-3">
-                                                                            <a href=""><i class="fab fa-instagram"></i></a>
-                                                                          </div>
-                                                                          <div class="col-xs-12 col-sm-3">
-                                                                            <a href=""><i class="fab fa-twitter"></i></a>
-                                                                          </div>
-                                                                          <div class="col-xs-12 col-sm-3">
-                                                                            <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                                                          </div>
-                                                                      </div>
-                                                          </div>
-                                                            
-                                                            <div class="home-buttons">
-                                                                  <a href="https://themeforest.net/item/leven-vcard-wordpress-theme/25289671" target="_blank" id="" class="btn btn-primary">Download CV</a>
-                                                                  <a href="https://lmpixels.com/wp/leven-wp/contact/" target="_self" id="" class="btn btn-secondary">Contact</a>
-                                                            </div>
-                                                                                  
-                                                          
-                                                    </div>
-                                                </div>
-                                            </div>
-                                  </div>
-                            </div>
-                        
-                        <div class="row">
-                              <div class="col-xs-12 col-sm-12">
-                                            <h2>What I Do</h2>
-                                            <div class="ci-text">
-                                              <p>Mauris neque libero, aliquet vel mollis nec, euismod sed tellus. Mauris convallis dictum elit id volutpat. Vivamus blandit, dolor vitae lacinia maximus, risus velit vehicula odio, a tincidunt turpis turpis tempus ex.</p>
-                                            </div>
-                              </div>
-                        </div>
-                      
+      </div>
+    </div>
+  </div>
 </div>
-            
-  <script src="/bootstrap.min.js" integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
-  
-    </body>
- </html>
+
+<div class="container">
+
+      <div data-url="{% url 'profile_posts' user_info.id %}" id="posts">
+       
+      </div>
+      <div id="spinner-box" class="d-flex justify-content-center invisible m-5">
+          <div class="spinner-border text-light"  style="width: 3rem; height: 3rem;" role="status">
+          </div>
+      </div>
+      <script src="{% static 'teamMateApp/json/loadData.js' %}"></script>
+      <script src="{% static 'teamMateApp/json/cookie.js' %}"></script>
+      <script src="{% static 'teamMateApp/json/profile.js' %}"></script>
+
+</div>  
+
+ 
+
+{% endblock %}
