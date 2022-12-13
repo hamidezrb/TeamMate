@@ -63,7 +63,8 @@ def participants(request,team_id):
     team = Team.objects.filter(id = team_id).first()
     participants = Participants.objects.filter(team = team)
     return render(request, "teamMateApp/participants.html",{
-         "participants" : participants 
+         "participants" : participants ,
+         "team_title" : team.title
     })
     
     
@@ -208,6 +209,71 @@ def follow_user(request):
      
    
  
+ 
+@login_required(login_url='/login')
+def team_request(request,team_id):
+    
+    team = Team.objects.filter(id = team_id).first()
+    if  team.user.id == request.user.id:
+        message = "you are not allowed to request to your own team"
+        return JsonResponse({
+        "message" : message,
+        "status": 401
+        })
+        
+    
+    requested_user = User.objects.filter(id = request.user.id).first()
+    count_team_requests = team.request_set.count()
+    if count_team_requests != 0 :
+        users_id = team.request_set.values_list('user')
+        for elem in users_id :
+            if request.user.id == elem[0] :
+               message = f"you have already requested to {team.user.username}"
+               return JsonResponse({
+               "message" : message,
+               "status": 401
+               })
+               
+        add_request = Request.objects.filter(team = team).first()
+        add_request.user.add(requested_user)
+            
+    else:
+        add_request = Request(team = team)
+        add_request.save()   
+        add_request.user.add(requested_user)
+               
+    
+    message = f"your request sent successfully to {team.user.username}"
+    return JsonResponse({
+                "message" : message,
+                 "status": 200,
+            })
+ 
+  
+@login_required(login_url='/login')
+def Accept(request,request_id):
+    
+    user = User.objects.filter(id = request.user.id).first()
+    team_request= Request.objects.filter( id = request_id).first()
+    
+    if  team_request.team.user.id != request.user.id:
+        message = "you are not allowed to accept"
+        return JsonResponse({
+        "message" : message,
+        "status": 401
+        })
+       
+    participant = Participants(user = team_request.user , team = team_request.team)
+    participant.save()
+    
+    message = f"request of {team_request.user.username} has been accepted successfully"
+    return JsonResponse({
+                "message" : message,
+                 "status": 200
+            })
+    
+      
+
 @login_required(login_url='/login')    
 def dashboard(request):
     return render(request, "teamMateApp/dashboard.html")

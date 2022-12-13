@@ -55,6 +55,11 @@ img {
   margin: 15px 0;
   text-transform: capitalize;
 }
+.heading-with-text{
+  color: #ffff;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
 
 @media (max-width: 441px){
   #ccMembers .cc-member-card

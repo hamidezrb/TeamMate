@@ -40,3 +40,11 @@ class Follow(models.Model):
     
     def __str__(self):
         return f"user : {self.user.username}"
+    
+    
+class Request(models.Model):
+    team = models.ForeignKey(Team,on_delete=models.CASCADE)
+    user = models.ManyToManyField(User)
+
+    def __str__(self):
+        return f"team : {self.team.title}"
