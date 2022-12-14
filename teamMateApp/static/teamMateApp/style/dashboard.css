@@ -128,3 +128,25 @@
   border: 1px solid rgba(0,0,0,.125);
   border-radius: 0.25rem;
 }
+
+
+img.profileImage {
+  border-radius: 50%;
+  overflow: hidden;
+  left: 15px;
+  width: 80px;
+  height: 80px;
+  top: -50px;
+  text-align: center;
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+  line-height: 34px;
+  object-fit:cover;
+  /* box-shadow: 0 0 0 8px #ffffff; */
+}

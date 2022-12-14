@@ -18,18 +18,54 @@ from datetime import datetime
 class NewTeamForm(forms.Form):
     title = forms.CharField(
         max_length=500,
+        required=True,
          widget=forms.TextInput(
-            attrs={"placeholder": "Title", "class": "form-control col-12"}
+            attrs={"placeholder": "Title", "class": "form-control col-12 mt-3"}
+        ))
+    participantsNO = forms.IntegerField(
+        required=True,
+         widget=forms.TextInput(
+            attrs={"placeholder": "participantsNO", "class": "form-control col-12 mt-3"}
+        ))
+    startdate = forms.DateTimeField(
+        required=True,
+         widget=forms.DateTimeInput(
+            attrs={'type':'datetime-local',"placeholder": "startdate", "class": "form-control col-12 mt-3"}
+        ))
+    finishdate = forms.DateTimeField(
+        required=True,
+         widget=forms.DateTimeInput(
+            attrs={'type':'datetime-local',"placeholder": "finishdate", "class": "form-control col-12 mt-3"}
         ))
     content = forms.CharField(
+        required=True,
         max_length=1500,
          widget=forms.Textarea(
             attrs={"placeholder": "content", "class": "form-control col-12"}
         ))
-    participantsNO = forms.IntegerField(
+    image = forms.ImageField(label= "photo",required=True)
+    
+    
+class NewProfile(forms.Form):
+    first_name = forms.CharField(
+        max_length=500,
+        required=True,
          widget=forms.TextInput(
-            attrs={"placeholder": "participantsNO", "class": "form-control col-12"}
+            attrs={"placeholder": "firstname", "class": "form-control col-12 mt-3"}
         ))
+    last_name = forms.CharField(
+        max_length=500,
+        required=True,
+         widget=forms.TextInput(
+            attrs={"placeholder": "lastname", "class": "form-control col-12 mt-3"}
+        ))
+    info = forms.CharField(
+        max_length=1500,
+         widget=forms.Textarea(
+            attrs={"placeholder": "info", "class": "form-control col-12"}
+        ))
+    image = forms.ImageField(label= "photo",required=True)
+    
     
 def index(request):
      return render(request, "teamMateApp/Index.html")
@@ -221,8 +257,14 @@ def team_request(request,team_id):
         "status": 401
         })
         
-    
     requested_user = User.objects.filter(id = request.user.id).first()
+    if  requested_user.image is None:
+          message = f"you have to first edit your profile to be able to request"
+          return JsonResponse({
+          "message" : message,
+          "status": 401
+          })
+        
     count_team_requests = team.request_set.count()
     if count_team_requests != 0 :
         users_id = team.request_set.values_list('user')
@@ -276,21 +318,33 @@ def Accept(request,request_id):
 
 @login_required(login_url='/login')    
 def dashboard(request):
-    return render(request, "teamMateApp/dashboard.html")
+    user = User.objects.get(pk = request.user.id)
+    return render(request, "teamMateApp/dashboard.html",
+                  {
+                      "teamForm" : NewTeamForm(),
+                      "profileForm" : NewProfile(),
+                      "user" : user
+                   })
 
 @login_required(login_url='/login')
 def new_Team(request):
     if request.method == "POST":
-        form = NewTeamForm(request.POST)
+        form = NewTeamForm(request.POST, request.FILES)
         if form.is_valid():
+            user = User.objects.get(pk = request.user.id)
+            if  user.image is None:
+                message = f"you have to first edit your profile to be able to add a team"
+                return JsonResponse({
+                "message" : message,
+                "status": 401
+                })
             title = form.cleaned_data["title"]
             content = form.cleaned_data["content"]
             startdate = form.cleaned_data["startdate"]
             finishdate = form.cleaned_data["finishdate"]
             participantsNO = form.cleaned_data["participantsNO"]
             image = form.cleaned_data["image"]
-            # Save a record
-            user = User.objects.get(pk = request.user.id)
+            
             team = Team(
                 user = user,
                 title = title,
@@ -301,15 +355,49 @@ def new_Team(request):
                 image = image
             )
             team.save()
-            return HttpResponseRedirect(reverse("index"))
+            return JsonResponse({
+                "message": "team added successfully.",
+                "status": 200})
         else:
-            return render(request, "teamMateApp/index.html", {
-                "form": form
-            })
+            return JsonResponse({
+                "message": "all fields are required",
+                "status": 401})
+            
     else:
-          return render(request, "teamMateApp/index.html", {
-              "form" : NewTeamForm()
-          })
+            return JsonResponse({
+                "message": "check your request",
+                "status": 401})
+            
+            
+@login_required(login_url='/login')
+def edit_profile(request):
+    if request.method == "POST":
+        form = NewProfile(request.POST, request.FILES)
+        if form.is_valid():
+            user = User.objects.get(pk = request.user.id)
+            first_name = form.cleaned_data["first_name"]
+            last_name = form.cleaned_data["last_name"]
+            info = form.cleaned_data["info"]
+            image = form.cleaned_data["image"]
+            
+            user.first_name = first_name
+            user.last_name = last_name
+            user.info = info
+            user.image = image
+            user.save()
+          
+            return JsonResponse({
+                "message": "profile updated successfully.",
+                "status": 200})
+        else:
+            return JsonResponse({
+                "message": "all fields are required",
+                "status": 401})
+            
+    else:
+            return JsonResponse({
+                "message": "check your request",
+                "status": 401})
           
 def login_view(request):
     if request.method == "POST":

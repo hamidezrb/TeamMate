@@ -17,5 +17,8 @@ urlpatterns = [
     path("follow_user", views.follow_user, name="follow_user"),
     path("profile_posts/<int:id>", views.profile_posts, name="profile_posts"),
     path("team_request/<int:team_id>", views.team_request, name="team_request"),
-    path("Accept/<int:request_id>", views.Accept, name="Accept")
+    path("Accept/<int:request_id>", views.Accept, name="Accept"),
+    path("new_Team", views.new_Team, name="new_Team"),
+    path("edit_profile", views.edit_profile, name="edit_profile")
+    
 ]

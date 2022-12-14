@@ -4,14 +4,14 @@ from teamMate import settings
 
 # Create your models here.
 class User(AbstractUser):
-    image = models.ImageField(upload_to= settings.MEDIA_ROOT)
+    image = models.ImageField(upload_to="user_images/")
     Info = models.CharField(null = True,max_length=2000)
 
 
 class Team(models.Model):
     title = models.CharField(null = False,max_length=500)
     content = models.CharField(null = False,max_length=1500)
-    image = models.ImageField(upload_to=settings.MEDIA_ROOT)
+    image = models.ImageField(upload_to="images/")
     startdate = models.DateTimeField(auto_now_add = False)
     finishdate = models.DateTimeField(auto_now_add = False)
     participantsNO = models.IntegerField(null = False)

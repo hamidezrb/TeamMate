@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block body %}
+
 <div class="container av-dashboard">
     <div class="row">
     
@@ -13,9 +14,9 @@
     <div class="card">
     <div class="card-body">
         <div class="card-img">
-        <span><i>H</i></span>
+            <span><i>H</i></span>
         </div>
-        <h4>hamide zarabi</h4>
+        <h4>{{user.username}}</h4>
         <ul>
             <li><a class="add-team" style="cursor: pointer;"><i class="fas fa-user-edit"></i>add Team</a></li>
             <li><a class="edit_profile"  style="cursor: pointer;"><i class="fas fa-user-edit"></i>Edit Profile</a></li>
@@ -30,61 +31,19 @@
                 <div class="card-body">
                <div id="add-team">
                     <h3>Add Team</h3>
-                    <form method="post">
-                        <div class="form-row">
-                        <div class="form-group col-md-6  mt-3">
-                            <label for="inputEmail4">Title</label>
-                            <input type="text" class="form-control" name="Title" id="Title" placeholder="Title">
-                        </div>
-                        <div class="form-group col-md-6  mt-3">
-                            <label for="inputPassword4">Number Of Participants</label>
-                            <input type="text" class="form-control" id="participantsNO" name="participantsNO" placeholder="Number Of Participants">
-                        </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6  mt-3">
-                            <label for="inputEmail4">Startdate</label>
-                            <input type="datetime-local" class="form-control" name="startdate" id="startdate" placeholder="">
-                            </div>
-                            <div class="form-group col-md-6  mt-3">
-                            <label for="inputPassword4">Finishdate</label>
-                            <input type="datetime-local" class="form-control" id="finishdate" name="finishdate" placeholder="">
-                            </div>
-                        </div>
-                        <div class="form-group  mt-3">
-                        <label for="inputAddress">content</label>
-                        <textarea type="text" class="form-control" id="content" name="content" placeholder=""></textarea>
-                        </div>
-                        <div class="form-group mt-3">
-                        <label for="inputAddress2">uoload team image</label>
-                        <input type="file" name="image" class="form-control"  id="image" accept=".jpg,.JPG,.png,.PNG,.jpeg,.JPEG" required />
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-5">Create</button>
+                    <form  id="formTeam" enctype='multipart/form-data'>
+                        {% csrf_token %}
+                        {{teamForm}}
+                        <input type="submit" class="btn btn-primary mt-5" value="Create"/>
                     </form>                                       
                 </div>
 
                 <div id="edit_profile" class="invisible">
                     <h3>Edit Profile</h3>
-                    <form method="post">
-                        <div class="form-row">
-                        <div class="form-group col-md-6  mt-3">
-                            <label for="inputEmail4">first name</label>
-                            <input type="text" class="form-control" name="first_name" id="first_name" placeholder="first name">
-                        </div>
-                        <div class="form-group col-md-6  mt-3">
-                            <label for="inputPassword4">last name</label>
-                            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="last name">
-                        </div>
-                        </div>
-                        <div class="form-group  mt-3">
-                        <label for="inputAddress">Info</label>
-                        <textarea type="text" class="form-control" id="Info" name="Info" placeholder=""></textarea>
-                        </div>
-                        <div class="form-group mt-3">
-                        <label for="inputAddress2">upload your image</label>
-                        <input type="file" name="image" class="form-control"  id="image" accept=".jpg,.JPG,.png,.PNG,.jpeg,.JPEG" required />
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-5">Update</button>
+                    <form  id="formProfile" method="post">
+                        {% csrf_token %}
+                        {{profileForm}}
+                        <input type="submit" class="btn btn-primary mt-5" value="Update"/>
                     </form>
                 </div>
                 <div id="team_requests" class="invisible">
