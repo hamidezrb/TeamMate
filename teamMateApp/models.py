@@ -44,7 +44,8 @@ class Follow(models.Model):
     
 class Request(models.Model):
     team = models.ForeignKey(Team,on_delete=models.CASCADE)
-    user = models.ManyToManyField(User)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    accepted = models.BooleanField(default=False)
 
     def __str__(self):
         return f"team : {self.team.title}"

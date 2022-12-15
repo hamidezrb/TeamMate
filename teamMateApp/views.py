@@ -4,16 +4,14 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from .models import User
 from django import forms
 from .models import *
-from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-from .models import User
 from django.template import loader
 from datetime import datetime
+from .team import *
 
 class NewTeamForm(forms.Form):
     title = forms.CharField(
@@ -46,6 +44,7 @@ class NewTeamForm(forms.Form):
     image = forms.ImageField(label= "photo",required=True)
     
     
+    
 class NewProfile(forms.Form):
     first_name = forms.CharField(
         max_length=500,
@@ -59,8 +58,16 @@ class NewProfile(forms.Form):
          widget=forms.TextInput(
             attrs={"placeholder": "lastname", "class": "form-control col-12 mt-3"}
         ))
+    
+    email = forms.EmailField(
+        max_length=254,
+        required=True,
+         widget=forms.EmailInput(
+            attrs={"placeholder": "email", "class": "form-control col-12 mt-3"}
+        ))
     info = forms.CharField(
         max_length=1500,
+        required=False,
          widget=forms.Textarea(
             attrs={"placeholder": "info", "class": "form-control col-12"}
         ))
@@ -78,17 +85,8 @@ def posts(request):
         return HttpResponse()
     
     teams = Team.objects.filter(finishdate__gte = datetime.now()).order_by("-createdate")[start:end]
-    list_team = []
-    for team in teams:
-        viewMore = False
-        if  team.participants_set.count() > 3 :
-            viewMore = True
-            
-        participants = team.participants_set.all()[:3]
-        list_team.append({ 'participants':participants ,'team_id' : team.id, 'title' : team.title ,'content' :team.content , 'startdate' : team.startdate,
-                          'finishdate' : team.finishdate , 'image' :team.image.url , 'createuser_image' : team.user.image.url, 'user_id' : team.user.id,
-                          'createdate' : team.createdate.time(), 'participantsNO' : team.participantsNO , 'viewMore' : viewMore})
-        
+    list_team = team.get_teams(request,teams)
+    
     context = { "teams" : list_team}
     template = loader.get_template('teamMateApp/posts.html') 
     return HttpResponse(template.render(context))
@@ -131,17 +129,8 @@ def profile_posts(request,id):
         return HttpResponse()
     
     teams = follow_user.teams.all().order_by("-createdate")[start:end]
-    list_team = []
-    for team in teams:
-        viewMore = False
-        if  team.participants_set.count() > 3 :
-            viewMore = True
-            
-        participants = team.participants_set.all()[:3]
-        list_team.append({ 'participants':participants ,'team_id' : team.id, 'title' : team.title ,'content' :team.content , 'startdate' : team.startdate,
-                          'finishdate' : team.finishdate , 'image' :team.image.url , 'createuser_image' : team.user.image.url, 'user_id' : team.user.id,
-                          'createdate' : team.createdate.time(), 'participantsNO' : team.participantsNO , 'viewMore' : viewMore})
-    
+    list_team = team.get_teams(request,teams)
+  
     context = { "teams" : list_team}
     template = loader.get_template('teamMateApp/posts.html') 
     return HttpResponse(template.render(context))
@@ -158,9 +147,7 @@ def following_posts(request):
     user = User.objects.get(id = request.user.id)
     follow = Follow.objects.filter(user = user).first()
     if follow is None:
-            return render(request, "teamMateApp/following.html", {
-               "posts" : [],
-          })
+         return HttpResponse()
    
     followings = follow.following.all()
     start = int(request.GET.get("start") or 0)
@@ -169,17 +156,8 @@ def following_posts(request):
     if start > team_count:
         return HttpResponse()
     
-    teams=[]
     list_team = Team.objects.filter(user__in = followings , finishdate__gte = datetime.now()).order_by("-createdate")[start:end]
-    for team in list_team:
-        viewMore = False
-        if  team.participants_set.count() > 3 :
-            viewMore = True
-            
-        participants = team.participants_set.all()[:3]
-        teams.append({ 'participants':participants ,'team_id' : team.id, 'title' : team.title ,'content' :team.content , 'startdate' : team.startdate,
-                          'finishdate' : team.finishdate , 'image' :team.image.url , 'createuser_image' : team.user.image.url,'user_id' : team.user.id,
-                          'createdate' : team.createdate.time(), 'participantsNO' : team.participantsNO , 'viewMore' : viewMore})
+    teams = team.get_teams(request,list_team)
    
     context = { "teams" : teams}
     template = loader.get_template('teamMateApp/posts.html') 
@@ -258,32 +236,26 @@ def team_request(request,team_id):
         })
         
     requested_user = User.objects.filter(id = request.user.id).first()
-    if  requested_user.image is None:
-          message = f"you have to first edit your profile to be able to request"
+    if  requested_user.image:
+        pass
+    else:
+          message = f"first you have to edit your profile to be able to request"
           return JsonResponse({
           "message" : message,
           "status": 401
           })
         
-    count_team_requests = team.request_set.count()
-    if count_team_requests != 0 :
-        users_id = team.request_set.values_list('user')
-        for elem in users_id :
-            if request.user.id == elem[0] :
-               message = f"you have already requested to {team.user.username}"
-               return JsonResponse({
-               "message" : message,
-               "status": 401
-               })
-               
-        add_request = Request.objects.filter(team = team).first()
-        add_request.user.add(requested_user)
-            
+ 
+    team_request = team.request_set.filter(user = requested_user).first()
+    if team_request is not None :
+       message = f"you have already requested to {team.user.username}"
+       return JsonResponse({
+       "message" : message,
+       "status": 401
+       })
     else:
-        add_request = Request(team = team)
+        add_request = Request(team = team , user = requested_user )
         add_request.save()   
-        add_request.user.add(requested_user)
-               
     
     message = f"your request sent successfully to {team.user.username}"
     return JsonResponse({
@@ -293,37 +265,83 @@ def team_request(request,team_id):
  
   
 @login_required(login_url='/login')
-def Accept(request,request_id):
-    
-    user = User.objects.filter(id = request.user.id).first()
-    team_request= Request.objects.filter( id = request_id).first()
-    
-    if  team_request.team.user.id != request.user.id:
-        message = "you are not allowed to accept"
-        return JsonResponse({
-        "message" : message,
-        "status": 401
-        })
-       
-    participant = Participants(user = team_request.user , team = team_request.team)
-    participant.save()
-    
-    message = f"request of {team_request.user.username} has been accepted successfully"
-    return JsonResponse({
-                "message" : message,
-                 "status": 200
+def accept_member(request):
+    if request.method == "POST":
+        data = json.load(request)
+        request_id = data['request_id']
+        
+        team_request= Request.objects.filter( id = request_id).first()
+        if team_request.accepted == True:
+            message = "this request has been already accepted"
+            return JsonResponse({
+             "message" : message,
+             "status": 401
+             })
+            
+        if  team_request.team.user.id != request.user.id:
+            message = "you are not allowed to accept"
+            return JsonResponse({
+            "message" : message,
+            "status": 401
             })
+            
+        
+        if Participants.objects.filter(team = team_request.team).count() + 1 > team_request.team.participantsNO:
+              message = f"you can not add more than {team_request.team.participantsNO} participants"
+              return JsonResponse({
+              "message" : message,
+              "status": 401
+              })
+          
+              
+        new_participant = Participants.objects.filter(user = team_request.user).first()
+        
+        if  new_participant is not None:
+            participant = Participants.objects.filter(user = team_request.user , team = team_request.team).first()
+            if participant is not None:
+                message = "this request has been already accepted"
+                return JsonResponse({
+                "message" : message,
+                "status": 401
+                })
+            else:
+                 new_participant.team.add(team_request.team)
+       
+        else:
+            new_participant = Participants(user = team_request.user)
+            new_participant.save()
+            new_participant.team.add(team_request.team)
+            
+           
+        team_request.accepted = True
+        team_request.save()
+        message = f"request of {team_request.user.username} accepted successfully"
+        return JsonResponse({
+                    "message" : message,
+                    "status": 200
+                })
     
       
 
 @login_required(login_url='/login')    
 def dashboard(request):
     user = User.objects.get(pk = request.user.id)
+    teams = user.teams.all()
+    requests = Request.objects.filter(team__in = teams , accepted = False ).all()
+    list_request=[]
+    for item in requests:
+        participantsNO = Participants.objects.filter(team = item.team).count()
+        remains = item.team.participantsNO - participantsNO
+        list_request.append({'remains' : remains , 'team_title' : item.team.title ,'userfullname' : f"{item.user.first_name} {item.user.last_name}" ,
+                          'requestid' : item.id , 'userid' : item.user.id })
     return render(request, "teamMateApp/dashboard.html",
                   {
                       "teamForm" : NewTeamForm(),
-                      "profileForm" : NewProfile(),
-                      "user" : user
+                      "profileForm" : NewProfile(initial={'first_name': user.first_name,'last_name': user.last_name,
+                       'email': user.email,'Info': user.Info,'image': user.image}),
+                      "firstchar_username" : user.username[0].capitalize(),
+                      "user" : user,
+                      "requests" : list_request
                    })
 
 @login_required(login_url='/login')
@@ -332,13 +350,24 @@ def new_Team(request):
         form = NewTeamForm(request.POST, request.FILES)
         if form.is_valid():
             user = User.objects.get(pk = request.user.id)
-            if  user.image is None:
-                message = f"you have to first edit your profile to be able to add a team"
+            if user.image:
+                pass
+            else:
+                message = "first you have to edit your profile to be able to add a team"
                 return JsonResponse({
                 "message" : message,
                 "status": 401
                 })
+                
             title = form.cleaned_data["title"]
+            team = Team.objects.filter(title = title).first()
+            if team is not None:
+                message = f"team with this title already exists"
+                return JsonResponse({
+                "message" : message,
+                "status": 401
+                })
+                
             content = form.cleaned_data["content"]
             startdate = form.cleaned_data["startdate"]
             finishdate = form.cleaned_data["finishdate"]
@@ -379,11 +408,13 @@ def edit_profile(request):
             last_name = form.cleaned_data["last_name"]
             info = form.cleaned_data["info"]
             image = form.cleaned_data["image"]
+            email = form.cleaned_data["email"]
             
             user.first_name = first_name
             user.last_name = last_name
-            user.info = info
+            user.Info = info
             user.image = image
+            user.email = email
             user.save()
           
             return JsonResponse({
@@ -428,8 +459,6 @@ def logout_view(request):
 def register(request):
     if request.method == "POST":
         username = request.POST["username"]
-        email = request.POST["email"]
-
         # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
@@ -440,7 +469,7 @@ def register(request):
 
         # Attempt to create new user
         try:
-            user = User.objects.create_user(username, email, password)
+            user = User.objects.create_user(username, "" , password)
             user.save()
         except IntegrityError:
             return render(request, "teamMateApp/register.html", {
@@ -450,3 +479,7 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "teamMateApp/register.html")
+    
+    
+    
+    

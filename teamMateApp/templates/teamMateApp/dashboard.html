@@ -13,9 +13,18 @@
     <div class="col-lg-3 col-md-3 col-sm-12">
     <div class="card">
     <div class="card-body">
+        {% if user.image %}
+        <a class="main-avatar" href="{% url 'profile' user.id %}">
+            <img alt="" width="50" height="50" src="{{user.image.url}}" class="profileImage">
+        </a> 
+
+        {% else %}
         <div class="card-img">
-            <span><i>H</i></span>
+            <span><i>{{firstchar_username}}</i></span>
         </div>
+
+        {% endif %}
+      
         <h4>{{user.username}}</h4>
         <ul>
             <li><a class="add-team" style="cursor: pointer;"><i class="fas fa-user-edit"></i>add Team</a></li>
@@ -47,25 +56,19 @@
                     </form>
                 </div>
                 <div id="team_requests" class="invisible">
-                    <h3>team1</h3>
+                    
+                    {% for item in requests %}
+                    <!-- <h3>{{item.team.title}} (participants : {{item.team.participantsNO}})</h3> -->
                     <div class="alert alert-dark" role="alert">
-                        This is a dark alert—check it out!
-                        <button type="button"  style="float: right;" class="btn btn-success">
+                        Team : {{item.team_title}} - remained number: {{item.remains}} - 
+                        <a href="{% url 'profile' item.userid %}">
+                            user : {{item.userfullname}}
+                        </a>
+                        <button data-requestId="{{item.requestid}}"  type="button"  style="float: right;" class="btn btn-success accept_member">
                             Accept
                         </button>
                     </div>
-                    <div class="alert alert-dark" role="alert">
-                        This is a dark alert—check it out!
-                        <button type="button"  style="float: right;" class="btn btn-success">
-                            Accept
-                        </button>
-                    </div>
-                    <div class="alert alert-dark" role="alert">
-                        This is a dark alert—check it out!
-                        <button type="button"  style="float: right;" class="btn btn-success">
-                            Accept
-                        </button>
-                    </div>
+                    {% endfor %}
                 </div>
                 </div>
               </div>
