@@ -7,7 +7,7 @@
 
 {% block body %}
 
-<div class="breadcrumb-bg mb-3">
+<div class="breadcrumb-bg">
   <div class="container">
     <div class="row">
       <div class="blog-author">
@@ -50,11 +50,21 @@
   </div>
 </div>
 
+<ul class="nav nav-tabs" id="myTab" style="background : #f4f4f4" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active"  data-url="{% url 'profile_teams' id=user_info.id type=0 %}" id="owner-tab" data-bs-toggle="tab"  type="button" role="tab" aria-selected="true">owner</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link"  data-url="{% url 'profile_teams' id=user_info.id type=1 %}" id="member-tab" data-bs-toggle="tab"  type="button" role="tab"  aria-selected="false">member</button>
+  </li>
+</ul>
+
 <div class="container">
 
-      <div data-url="{% url 'profile_posts' user_info.id %}" id="posts">
+      <div data-url="{% url 'profile_teams' id=user_info.id type=0 %}" id="posts">
        
       </div>
+     
       <div id="spinner-box" class="d-flex justify-content-center invisible m-5">
           <div class="spinner-border text-light"  style="width: 3rem; height: 3rem;" role="status">
           </div>

@@ -1,14 +1,14 @@
 
-// Start with first post
+// Start with first team
 let counter = 0;
 
-// Load 8 posts at a time
+// Load 8 teams at a time
 const quantity = 9;
 
-// When DOM loads, render the first 8 posts
+// When DOM loads, render the first 8 teams
 document.addEventListener('DOMContentLoaded', load);
 
-// If scrolled to bottom, load the next 20 posts
+// If scrolled to bottom, load the next 8 teams
 window.onscroll = () => {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
         load();
@@ -16,9 +16,9 @@ window.onscroll = () => {
 };
 
 const spinnerBox = document.getElementById('spinner-box')
-// Load next set of posts
+// Load next set of teams
 function load() {
-    // Set start and end post numbers, and update counter
+    // Set start and end team numbers, and update counter
     const start = counter;
     const end = start + quantity - 1;
     counter = end;

@@ -77,7 +77,7 @@ class NewProfile(forms.Form):
 def index(request):
      return render(request, "teamMateApp/Index.html")
 
-def posts(request):
+def teams(request):
     start = int(request.GET.get("start") or 0)
     end = int(request.GET.get("end") or (start + 9))
     team_count = Team.objects.count()
@@ -88,7 +88,7 @@ def posts(request):
     list_team = team.get_teams(request,teams)
     
     context = { "teams" : list_team}
-    template = loader.get_template('teamMateApp/posts.html') 
+    template = loader.get_template('teamMateApp/teams.html') 
     return HttpResponse(template.render(context))
     
     
@@ -119,21 +119,34 @@ def profile(request,user_id):
         "isfollowed": follower is not None
     })
 
-def profile_posts(request,id):
+def profile_teams(request,id,type=0):
     
-    follow_user = User.objects.get(id = id)    
+    user = User.objects.get(id = id)    
     start = int(request.GET.get("start") or 0)
     end = int(request.GET.get("end") or (start + 9))
-    team_count = follow_user.teams.count()
-    if start > team_count:
-        return HttpResponse()
     
-    teams = follow_user.teams.all().order_by("-createdate")[start:end]
-    list_team = team.get_teams(request,teams)
-  
+    if type == 0:
+        team_count = user.teams.count()
+        if start > team_count:
+            return HttpResponse()
+        
+        teams = user.teams.all().order_by("-createdate")[start:end]
+        list_team = team.get_teams(request,teams)
+    
+    else:
+        participant = Participants.objects.filter(user = user).first()
+        team_count = participant.team.count()
+        if start > team_count:
+            return HttpResponse()
+        
+        teams = participant.team.all()[start:end]
+        list_team = team.get_teams(request,teams)
+        
+      
     context = { "teams" : list_team}
-    template = loader.get_template('teamMateApp/posts.html') 
+    template = loader.get_template('teamMateApp/teams.html') 
     return HttpResponse(template.render(context))
+ 
       
 
 @login_required(login_url='/login')
@@ -142,7 +155,7 @@ def following(request):
 
 
 @login_required(login_url='/login')
-def following_posts(request):
+def following_teams(request):
    
     user = User.objects.get(id = request.user.id)
     follow = Follow.objects.filter(user = user).first()
@@ -160,7 +173,7 @@ def following_posts(request):
     teams = team.get_teams(request,list_team)
    
     context = { "teams" : teams}
-    template = loader.get_template('teamMateApp/posts.html') 
+    template = loader.get_template('teamMateApp/teams.html') 
     return HttpResponse(template.render(context))
 
 
