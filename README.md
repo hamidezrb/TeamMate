@@ -1,24 +1,22 @@
 CS50 WEB PROGRAMMING FINAL PROJECT: TeamMate
 The project video is: -
 
-Main idea
+Main idea:
+
 TeamMate is a small web-application with the aim of helping people to find their favorite teams and join them to do volunteer things or their hobbies.
 this web-application gives people more opportunities to expand their social circle and make new friends and get new experiences. 
-
 All users who have accounts after updating their profiles they will be able to send requests to join their ideal teams and then 
 the creator of team decides who can join their team.
  
-Distinctiveness and Complexity
+Distinctiveness and Complexity:
 
 This project helps people find awesome people with similar interests and help them to be more sociable, therefore it is completely different than the other projects in this course, but i try to implement all methods learned through the lectures and problem sets.
-
 In terms of complexity, I used Django with more than one model and several javascript files to the frontend. Moreover, all of the web application is responsive to the different screen sizes (mainly mobile phones and computers).
 
 How to run the application:
 
 Make and apply migrations by running python manage.py makemigrations teamMateApp and python manage.py migrate.
 python manage.py runserver to run the server.
-
 Go to website address and register an account.
 
 
@@ -53,7 +51,6 @@ dashboard.html - template which has three menus (only for registered users when 
 1: A page to create new Team
 2: A page to edit their profile
 3: A page to accept requests sent to their teams
-
 
 admin.py - here I added some admin classes.
 models.py contains 5 models I used in the project. User model , Team model ,Request model , Participants model , Follow model .
