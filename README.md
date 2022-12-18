@@ -11,13 +11,16 @@ the creator of team decides who can join their team.<p>
  
 <h1>Distinctiveness and Complexity</h1>
 
-This project helps people find awesome people with similar interests and help them to be more sociable, therefore it is completely different than the other projects in this course, but i try to implement all methods learned through the lectures and problem sets.
-In terms of complexity, I used Django with more than one model and several javascript files to the frontend. Moreover, all of the web application is responsive to the different screen sizes (mainly mobile phones and computers).
+<p>This project helps people find awesome people with similar interests and help them to be more sociable, therefore it is completely different than the other projects in this course, but i try to implement all methods learned through the lectures and problem sets. </p>
+<p>In terms of complexity, I used Django with more than one model and several javascript files to the frontend. Moreover, all of the web application is responsive to the different screen sizes (mainly mobile phones and computers).<p>
 
 <h1>How to run the application</h1>
 
-Make and apply migrations by running python manage.py makemigrations teamMateApp and python manage.py migrate.
-python manage.py runserver to run the server.
+Make and apply migrations by running 
+<code>python manage.py makemigrations teamMateApp</code>
+<code>python manage.py migrate</code>
+run the server
+<code>python manage.py runserver</code>
 Go to website address and register an account.
 
 
@@ -48,23 +51,27 @@ following.html - templates for teams lists which their creator has been followed
 index.html - main templates that shows new Teams before their finish date.
 participants.html - template that shows all members of a team. If each team has more than 3 members , viewmore icon appears and when it is clicked this page will be displayed
 profile.html - this template shows user details with follow button and teams lists which user created or joined.
-dashboard.html - template for creating new teams , editing profile , accepting users' requests for their teams.
 dashboard.html - template which has three menus (only for registered users when click on the username located on the navbar they will be redirected to dashboard page):
-1: A page to create new Team
-2: A page to edit their profile
-3: A page to accept requests sent to their teams
+<ol>
+<li> A page to create new Team</li>
+<li> A page to edit their profile</li>
+<li> A page to accept requests sent to their teams</li>
+</ol>
 
-admin.py - here I added some admin classes.
-models.py contains 5 models I used in the project. User model , Team model ,Request model , Participants model , Follow model .
-urls.py - all application URLs.
-views.py - contains all application views.
-team.py - creates a list of teams and return it. it is used in three functions in view.py (teams,profile_teams,following_teams).
-media - this directory contains two folders (images and user_images). All users photos will be saved in user_images folder and all teams photo
-will be saved in images.
-
+<ul>
+<li>admin.py - here I added some admin classes.</li>
+<li>models.py contains 5 models I used in the project. User model , Team model ,Request model , Participants model , Follow model .</li>
+<li>urls.py - all application URLs.</li>
+<li>views.py - contains all application views.</li>
+<li>team.py - creates a list of teams and return it. it is used in three functions in view.py (teams,profile_teams,following_teams).</li>
+<li>media - this directory contains two folders (images and user_images). All users photos will be saved in user_images folder and all teams photo
+will be saved in images.</li>
+</ul>
 
 <h1>Tech used</h1>
-Python(django)
-Javascript
-HTML, CSS
-SQLITE.
+<ul>
+<li>Python(django)</li>
+<li>Javascript</li>
+<li>HTML, CSS</li>
+<li>SQLITE</li>
+</ul>
