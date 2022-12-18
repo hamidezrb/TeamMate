@@ -2,7 +2,7 @@ CS50 WEB PROGRAMMING FINAL PROJECT: TeamMate
 
 The project video is: -
 
-Main idea:
+<h1>Main idea</h1>
 
 TeamMate is a small web-application with the aim of helping people to find their favorite teams and join them to do volunteer things or their hobbies.
 this web-application gives people more opportunities to expand their social circle and make new friends and get new experiences. 
