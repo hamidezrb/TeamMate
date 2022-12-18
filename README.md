@@ -21,7 +21,7 @@ python manage.py runserver to run the server.
 Go to website address and register an account.
 
 
-<h1>Setup Django's deafult admin interface (optional)</h1>
+<h4>Setup Django's deafult admin interface (optional)</h4>
 
 In order to access the administrative interface via /admin, it is necessary to creat an administrative user.
 To do that, Create superuser with python manage.py createsuperuser.
