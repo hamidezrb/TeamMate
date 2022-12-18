@@ -9,24 +9,24 @@ this web-application gives people more opportunities to expand their social circ
 All users who have accounts after updating their profiles they will be able to send requests to join their ideal teams and then 
 the creator of team decides who can join their team.
  
-Distinctiveness and Complexity:
+<h1>Distinctiveness and Complexity</h1>
 
 This project helps people find awesome people with similar interests and help them to be more sociable, therefore it is completely different than the other projects in this course, but i try to implement all methods learned through the lectures and problem sets.
 In terms of complexity, I used Django with more than one model and several javascript files to the frontend. Moreover, all of the web application is responsive to the different screen sizes (mainly mobile phones and computers).
 
-How to run the application:
+<h1>How to run the application</h1>
 
 Make and apply migrations by running python manage.py makemigrations teamMateApp and python manage.py migrate.
 python manage.py runserver to run the server.
 Go to website address and register an account.
 
 
-Setup Django's deafult admin interface (optional):
+<h1>Setup Django's deafult admin interface (optional)</h1>
 
 In order to access the administrative interface via /admin, it is necessary to creat an administrative user.
 To do that, Create superuser with python manage.py createsuperuser.
 
-Files and directories:
+<h1>Files and directories</h1>
 
 teamMateApp - main application directory.
 static/teamMateApp contains all static content (js,css).
@@ -62,7 +62,7 @@ media - this directory contains two folders (images and user_images). All users 
 will be saved in images.
 
 
-Tech used:
+<h1>Tech used</h1>:
 Python(django)
 Javascript
 HTML, CSS
