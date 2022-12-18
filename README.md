@@ -43,7 +43,7 @@ To do that, Create superuser with <code>python manage.py createsuperuser</code>.
 <li>dashboard.js - script that run in dashboard.html template. it is used for adding new team and editing profile and showing requests in order to be accepted.</li>
 <li>cookie.js - script that run in layout.html which return cookie for csrftoken.</li>
 </ul>
-<h4>templates/djangoapp contains all application templates.</h4>
+<h4>templates/teamMateApp contains all application templates.</h4>
 <ul>
 <li>Login/Logout/Register</li>
 <li>layout.html - base templates. All other tempalates extend it.</li>
