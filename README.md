@@ -33,12 +33,13 @@ static/teamMateApp contains all static content (js,css).
 
 A css file with all of the css used in the web application
 js - all JavaScript files used in project.
-loadData.js - script that run in teams.html subtemplate which is used in profile.html and index.html and following.html. When these pages load completely only 8 teams will be displayed and when we scroll down the next 8 teams will be displayed.
-profile.js - this script run in profile.html. it is used for following or unfollowing the user and showing teams user created or joined.
-request.js - script that run in teams.html template. users can click on plus link on teams lists and after confirmation they can sen request to join the team.
-dashboard.js - script that run in dashboard.html template. it is used for adding new team and editing profile and showing requests in order to be accepted.
-cookie.js - script that run in layout.html which return cookie for csrftoken.
-
+<ul>
+<li>loadData.js - script that run in teams.html subtemplate which is used in profile.html and index.html and following.html. When these pages load completely only 8 teams will be displayed and when we scroll down the next 8 teams will be displayed.</li>
+<li>profile.js - this script run in profile.html. it is used for following or unfollowing the user and showing teams user created or joined.</li>
+<li>request.js - script that run in teams.html template. users can click on plus link on teams lists and after confirmation they can sen request to join the team.</li>
+<li>dashboard.js - script that run in dashboard.html template. it is used for adding new team and editing profile and showing requests in order to be accepted.</li>
+<li>cookie.js - script that run in layout.html which return cookie for csrftoken.</li>
+</ul>
 templates/djangoapp contains all application templates.
 Login/Logout/Register
 layout.html - base templates. All other tempalates extend it.
