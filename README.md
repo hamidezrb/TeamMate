@@ -53,11 +53,11 @@ To do that, Create superuser with <code>python manage.py createsuperuser</code>.
 <li>participants.html - template that shows all members of a team. If each team has more than 3 members , viewmore icon appears and when it is clicked this page will be displayed</li>
 <li>profile.html - this template shows user details with follow button and teams lists which user created or joined.</li>
 <li>dashboard.html - template which has three menus (only for registered users when click on the username located on the navbar they will be redirected to dashboard page):</li>
-<ol>
+<ul>
 <li> A page to create new Team</li>
 <li> A page to edit their profile</li>
 <li> A page to accept requests sent to their teams</li>
-</ol>
+</ul>
 </ul>
 
 
