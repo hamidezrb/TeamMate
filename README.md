@@ -4,10 +4,10 @@ The project video is: -
 
 <h1>Main idea</h1>
 
-TeamMate is a small web-application with the aim of helping people to find their favorite teams and join them to do volunteer things or their hobbies.
-this web-application gives people more opportunities to expand their social circle and make new friends and get new experiences. 
-All users who have accounts after updating their profiles they will be able to send requests to join their ideal teams and then 
-the creator of team decides who can join their team.
+<p>TeamMate is a small web-application with the aim of helping people to find their favorite teams and join them to do volunteer things or their hobbies.
+this web-application gives people more opportunities to expand their social circle and make new friends and get new experiences. </p>
+<p>All users who have accounts after updating their profiles they will be able to send requests to join their ideal teams and then 
+the creator of team decides who can join their team.<p>
  
 <h1>Distinctiveness and Complexity</h1>
 
