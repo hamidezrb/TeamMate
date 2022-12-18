@@ -102,7 +102,6 @@ def participants(request,team_id):
     })
     
     
-@login_required(login_url='/login')
 def profile(request,user_id):
     follow_user = User.objects.get(id = user_id)    
     followers = follow_user.followings.count()
@@ -135,6 +134,8 @@ def profile_teams(request,id,type=0):
     
     else:
         participant = Participants.objects.filter(user = user).first()
+        if participant is None:
+            return HttpResponse()
         team_count = participant.team.count()
         if start > team_count:
             return HttpResponse()

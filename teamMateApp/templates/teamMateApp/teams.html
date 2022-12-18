@@ -38,7 +38,7 @@
                         </li>
                         {% endif %}
 
-                        {% if team.owner == False and team.remains != 0 %}
+                        {% if team.owner == False and team.remains != 0 and team.authenticated %}
                         <li class="list-inline-item"> 
                             <a data-teamId ="{{team.team_id}}"><img src="{% static 'teamMateApp/icon/plus.png' %}"
                                 width="30" height="30 " class="team_request"></a>

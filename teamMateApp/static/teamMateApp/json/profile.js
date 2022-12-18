@@ -50,35 +50,15 @@ document.addEventListener('DOMContentLoaded', function() {
       let url = element.dataset.url;
       document.querySelector('#posts').dataset.url = url;
       document.querySelector('#posts').innerHTML = "";
-      loadFirstTeamData();
+      counter = 0;
+      load();
      } 
      function teamMember(event){
       let element = event.target;
       let url = element.dataset.url;
       document.querySelector('#posts').dataset.url = url ;
       document.querySelector('#posts').innerHTML = "";
-      loadFirstTeamData();
+      counter = 0;
+      load();
      }
 
-     function loadFirstTeamData() {
-      const quantity = 9;
-      const start = 0;
-      const end = start + quantity - 1;
-      url = document.querySelector('#posts').dataset.url
-      fetch(`${url}?start=${start}&end=${end}`)
-      .then(response => response.text())
-      .then(data => {
-          if(data){
-              spinnerBox.classList.remove('invisible')
-              setTimeout(()=>{
-      
-                  spinnerBox.classList.add('invisible')
-                  const post = document.createElement('div');
-                  post.className = 'container card-group';
-                  post.innerHTML = data;
-                  document.querySelector('#posts').append(post)
-                  
-              },500)
-          }
-      })
-  };
