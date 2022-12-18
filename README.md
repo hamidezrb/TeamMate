@@ -1,6 +1,6 @@
 <h1>CS50 WEB PROGRAMMING FINAL PROJECT: TeamMate</h1>
 
-The project video is: -
+<a href="https://youtu.be/mOPNEz_3I-E"></a>
 
 <h1>Main idea</h1>
 
