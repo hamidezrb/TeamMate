@@ -1,4 +1,4 @@
-CS50 WEB PROGRAMMING FINAL PROJECT: TeamMate
+<h1>CS50 WEB PROGRAMMING FINAL PROJECT: TeamMate</h1>
 
 The project video is: -
 
@@ -62,7 +62,7 @@ media - this directory contains two folders (images and user_images). All users 
 will be saved in images.
 
 
-<h1>Tech used</h1>:
+<h1>Tech used</h1>
 Python(django)
 Javascript
 HTML, CSS
