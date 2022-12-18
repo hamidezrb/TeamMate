@@ -1,6 +1,6 @@
 <h1>CS50 WEB PROGRAMMING FINAL PROJECT: TeamMate</h1>
 
-<a href="https://youtu.be/mOPNEz_3I-E"></a>
+<a href="https://youtu.be/mOPNEz_3I-E"><img src = "https://repository-images.githubusercontent.com/576754788/9cfbc41f-b881-4793-9e1b-ae7a03f3c9db"></a>
 
 <h1>Main idea</h1>
 
