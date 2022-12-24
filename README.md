@@ -4,7 +4,7 @@
 
 ### [TeamMate](https://youtu.be/mOPNEz_3I-E)
 
-The project video is: -
+<a href="https://youtu.be/mOPNEz_3I-E"><img src = "https://repository-images.githubusercontent.com/576754788/9cfbc41f-b881-4793-9e1b-ae7a03f3c9db"></a>
 
 ## Main idea ##
 
