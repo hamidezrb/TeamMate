@@ -1,92 +1,87 @@
-# Alan AI: In-app voice assistant SDK for Web
-
-[Alan Platform](https://alan.app/) • [Alan Studio](https://studio.alan.app/register) • [Docs](https://alan.app/docs) • [FAQ](https://alan.app/docs/usage/additional/faq) •
-[Blog](https://alan.app/blog/) • [Twitter](https://twitter.com/alanvoiceai)
-
-[![npm](https://img.shields.io/npm/v/@alan-ai/alan-sdk-web.svg)](https://www.npmjs.com/package/@alan-ai/alan-sdk-web)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/alan-ai/alan-sdk-web)](https://github.com/alan-ai/alan-sdk-web/releases)
-[![CircleCI](https://circleci.com/gh/alan-ai/alan-sdk-web.svg?style=shield)](https://circleci.com/gh/alan-ai/alan-sdk-web)
+## CS50 WEB PROGRAMMING FINAL PROJECT: TeamMate ##
 
 
-Quickly add voice to your app with the Alan Platform. Create an in-app voice assistant to enable human-like conversations and provide a personalized voice experience for every user.
 
-<img src="https://storage.googleapis.com/alan-public-images/github/tablet-tasks.gif" height="325px" align="right"/>
+### [TeamMate](https://youtu.be/mOPNEz_3I-E)
 
+![TeamMate Application](https://repository-images.githubusercontent.com/576754788/9cfbc41f-b881-4793-9e1b-ae7a03f3c9db)
 
-## Alan is a Voice AI Platform
+## Main idea ##
 
-Alan is a conversational voice AI platform that lets you create an intelligent voice assistant for your app. It offers all necessary tools to design, embed and host your voice solutions:
+TeamMate is a small web-application with the aim of helping people to find their favorite teams and join them to do volunteer things or their hobbies.
+this web-application gives people more opportunities to expand their social circle and make new friends and get new experiences.
 
-#### Alan Studio
-A powerful web-based IDE where you can write, test and debug dialog scenarios for your voice assistant or chatbot.
+All users who have accounts after updating their profiles they will be able to send requests to join their ideal teams and then 
+the creator of team decides who can join their team.
+ 
+## Distinctiveness and Complexity ##
 
-#### Alan Client SDKs
+This project helps people find awesome people with similar interests and help them to be more sociable, therefore it is completely different than the other projects in this course, but i try to implement all methods learned through the lectures and problem sets.
 
-Alan's lightweight SDKs to quickly embed a voice assistant to your app.
+In terms of complexity, I used Django with more than one model and several javascript files to the frontend. Moreover, all of the web application is responsive to the different screen sizes (mainly mobile phones and computers).
 
-#### Alan Cloud
+## How to run the application ##
 
-Alan's AI-backend powered by the industry’s best Automatic Speech Recognition (ASR), Natural Language Understanding (NLU) and Speech Synthesis. The Alan Cloud provisions and handles the infrastructure required to maintain your voice deployments and perform all the voice processing tasks.
+Make and apply migrations by running 
+```python manage.py makemigrations teamMateApp```
+```python manage.py migrate```
+and run the server by running 
+```python manage.py runserver```
 
-To get more details on how Alan works, see <a href="https://alan.app/platform" target="_blank">Alan Platform</a>.
-
-## Why Alan?
-
-* **No or minimum changes to your UI**: To voice enable your app, you only need to get the Alan Client SDK and drop it to your app.
-* **Serverless environment**: No need to plan for, deploy and maintain any infrastructure or speech components - the Alan Platform does the bulk of the work.
-* **On-the-fly updates**: All changes to the dialogs become available immediately.
-* **Voice flow testing and analytics**: Alan Studio provides advanced tools for testing your dialog flows and getting the analytics data on users' interactions, all in the same console.
-
-
-## How to start
-
-To create a voice assistant for your web app or page:
-
-1. <a href="https://studio.alan.app/register" target="_blank">Sign up for Alan Studio</a> to build voice scripts in JavaScript and test them.
-2. Use the Alan Web SDK to embed a voice assistant to your app or page. For details, see Alan AI documentation for the necessary framework:
-
-    * <a href="https://alan.app/docs/client-api/web/vanilla" target="_blank">JavaScript</a>
-	* <a href="https://alan.app/docs/client-api/web/react" target="_blank">React</a>
-    * <a href="https://alan.app/docs/client-api/web/angular" target="_blank">Angular</a>
-    * <a href="https://alan.app/docs/client-api/web/vue" target="_blank">Vue</a> 
-    * <a href="https://alan.app/docs/client-api/web/ember" target="_blank">Ember</a>
-    * <a href="https://alan.app/docs/client-api/web/electron" target="_blank">Electron</a>
+Go to website address and register an account.
 
 
-Check out our <a href="https://alan-ai.github.io/alan-sdk-web/" target="_blank">demo</a>.
+#### Setup Django's deafult admin interface (optional) ####
 
-## Downloads
+In order to access the administrative interface via /admin, it is necessary to creat an administrative user.
+To do that, Create superuser with ```python manage.py createsuperuser```.
 
-* <a href="https://www.npmjs.com/package/@alan-ai/alan-sdk-web" target="_blank">Alan package</a>
-* <a href="https://github.com/alan-ai/alan-sdk-web/releases" target="_blank">Alan Web SDK releases</a>
+## Files and directories ##
 
-## Example apps
+#### application teamMateApp ####
+#### static/teamMateApp contains all static content (js,css). ####
 
-In the [Examples](https://github.com/alan-ai/alan-sdk-web/tree/master/examples) folder, you can find example web apps created with:
+#### A css file with all of the css used in the web application ####
+#### js - all JavaScript files used in project. ####
+ 
+* loadData.js - script that run in teams.html subtemplate which is used in profile.html and index.html and following.html. When these pages load completely only 8 teams will be displayed and when we scroll down the next 8 teams will be displayed.
+* profile.js - this script run in profile.html. it is used for following or unfollowing the user and showing teams user created or joined.
+* request.js - script that run in teams.html template. users can click on plus link on teams lists and after confirmation they can send request to join the team.
+* dashboard.js - script that run in dashboard.html template. it is used for adding new team and editing profile and showing requests in order to be accepted.
+* cookie.js - script that run in layout.html which returns cookie for csrftoken.
+ 
+#### templates/teamMateApp contains all application templates. ####
+ 
+* Login/Logout/Register 
+* layout.html - base templates. All other tempalates extend it. 
+* teams.html - subtemplate that is used in a couple of other templates(index , profile , following). Contains HTML for teams lists. 
+* following.html - templates for teams lists which their creator has been followed by user(only for registered users). 
+* index.html - main templates that shows new Teams before their finish date. 
+* participants.html - template that shows all members of a team. If each team has more than 3 members , viewmore icon appears and when it is clicked this page will be displayed 
+* profile.html - this template shows user details with follow button and teams lists which user created or joined. 
+* dashboard.html - template which has three menus (only for registered users when click on the username located on the navbar they will be redirected to dashboard page): 
 
-* React
-* Angular 
-* Vue
-* Ember
-* Electron
+1. A page to create new Team
+2. A page to edit their profile
+3. A page to accept requests sent to their teams
 
-To launch the app, follow the instructions in the README file inside the example app folder. Then press the Alan button and try interacting with Alan.
-
-## Other platforms
-
-You may also want to try Alan Client SDKs for the following platforms:
-
-* <a href="https://github.com/alan-ai/alan-sdk-ios" target="_blank">iOS</a>
-* <a href="https://github.com/alan-ai/alan-sdk-android" target="_blank">Android</a>
-* <a href="https://github.com/alan-ai/alan-sdk-flutter" target="_blank">Flutter</a>
-* <a href="https://github.com/alan-ai/alan-sdk-ionic" target="_blank">Ionic</a>
-* <a href="https://github.com/alan-ai/alan-sdk-cordova" target="_blank">Apache Cordova</a>
-* <a href="https://github.com/alan-ai/alan-sdk-reactnative" target="_blank">React Native</a>
-* <a href="https://github.com/alan-ai/alan-sdk-pcf" target="_blank">Power Apps</a>
+ 
 
 
-## Have questions?
+ 
+* admin.py - here I added some admin classes. 
+* models.py contains 5 models I used in the project. User model , Team model ,Request model , Participants model , Follow model . 
+* urls.py - all application URLs. 
+* views.py - contains all application views. 
+* team.py - creates a list of teams and return it. it is used in three functions in view.py (teams,profile_teams,following_teams). 
+* media - this directory contains two folders (images and user_images). All users photos will be saved in user_images folder and all teams photo
+will be saved in images. 
+ 
 
-If you have any questions or something is missing in the documentation:
-- Join [Alan AI Slack community](https://app.slack.com/client/TL55N530A) for support
-- Contact us at [support@alan.app](mailto:support@alan.app)
+## Tech used ##
+ 
+* Python(django) 
+* Javascript 
+* HTML, CSS 
+* SQLITE 
+ 
