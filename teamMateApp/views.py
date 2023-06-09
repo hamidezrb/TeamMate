@@ -28,12 +28,12 @@ class NewTeamForm(forms.Form):
     startdate = forms.DateTimeField(
         required=True,
          widget=forms.DateTimeInput(
-            attrs={'type':'datetime-local',"placeholder": "startdate", "class": "form-control col-12 mt-3"}
+            format='%Y-%m-%d %H:%M:%S',attrs={"placeholder": "startdate", "class": "datetimefield form-control col-12 mt-3"}
         ))
     finishdate = forms.DateTimeField(
         required=True,
          widget=forms.DateTimeInput(
-            attrs={'type':'datetime-local',"placeholder": "finishdate", "class": "form-control col-12 mt-3"}
+            format='%Y-%m-%d %H:%M:%S',attrs={"placeholder": "finishdate", "class": "datetimefield form-control col-12 mt-3"}
         ))
     content = forms.CharField(
         required=True,
